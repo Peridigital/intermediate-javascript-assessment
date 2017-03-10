@@ -182,10 +182,9 @@ function valueType(value1, value2) {
 var theAnswer = "Unknown";
 
 function promiseCatcher(promise) {
-  console.log(promise);
+  
   promise.then(function(){
-    console.log(promise);
-    console.log(promise.valueOf());
+
     theAnswer = promise.valueOf()
   })
 }

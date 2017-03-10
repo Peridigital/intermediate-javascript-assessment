@@ -11,7 +11,7 @@
 // You must use two .then functions to handle the response object.
 // Chain these functions off of $http (do not put them in variables)
 // The response object will look like this :
-/* 
+/*
     {
       data: [
         {
@@ -40,6 +40,13 @@ function noWeakLink() {
   var promise = $http({
     method: 'GET',
     url: '/api/users'
+  })
+  .then(function (response) {
+    firstUser = response.data[0]
+    return response
+  }).then(function (response) {
+    thirdUser = response.data[2]
+    return response.data[9]
   })
   // CODE HERE...
 
@@ -73,7 +80,7 @@ function large() {
   return 'My name is ' + this.name + ' and I am very heavy!'
 }
 // CODE HERE...
-
+var boundToElephant = large.bind(elephant);
 
 
 // *************
@@ -86,7 +93,9 @@ function large() {
 // Use explicit binding to give capacity the context of crew and return the result.
 
 // CODE HERE...
-
+function deathStar(capacity, crew) {
+  return capacity.bind(crew)
+}
 
 
 // *************
@@ -101,7 +110,11 @@ function large() {
 // The closure function will returns the combined value of assets and liabilities.
 
 // CODE HERE...
-
+function accountingOffice(assets) {
+  return function (liabilities) {
+    return assets + liabilities
+  }
+}
 
 
 // *************
@@ -126,7 +139,17 @@ function large() {
 // };
 
 // CODE HERE...
+function forgetter(name) {
+  var rememberObj = {
+    name: name,
+    remember: []
+  }
 
+  return function rememberall(item) {
+    rememberObj.remember.push(item)
+    return rememberObj
+  }
+}
 
 
 // *************
@@ -154,3 +177,43 @@ function large() {
 // NOTE: Neither hunger nor danger should be able to exceed 100 or drop below 0.
 
 // CODE HERE...
+function frodo(startingHungerValue, startingDangerValue) {
+  var status = {
+    hunger: startingHungerValue,
+    danger: startingDangerValue
+  }
+
+  return {
+    dinnerOverFire: function () {
+      status.hunger -= 25
+      status.danger += 40
+      if (status.hunger > 100) {
+        status.hunger = 100
+      } else if (status.hunger < 0) {
+        status.hunger = 0
+      }
+      if (status.danger > 100) {
+        status.danger = 100
+      } else if (status.danger < 0) {
+        status.danger = 0
+      }
+      return status
+    },
+    hidingInBush: function () {
+      status.hunger += 35
+      status.danger -= 20
+      if (status.hunger > 100) {
+        status.hunger = 100
+      } else if (status.hunger < 0) {
+        status.hunger = 0
+      }
+      if (status.danger > 100) {
+        status.danger = 100
+      } else if (status.danger < 0) {
+        status.danger = 0
+      }
+      return status
+    }
+  }
+
+}
